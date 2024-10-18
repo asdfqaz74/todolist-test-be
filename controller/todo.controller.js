@@ -31,6 +31,7 @@ todoController.updateTodo = async (req, res) => {
     const fields = Object.keys(req.body);
     fields.map((field) => (todo[field] = req.body[field]));
     await todo.save();
+    res.status(200).json({ status: "Success", data: todo });
   } catch (e) {
     res.status(400).json({ status: "Error", error: e.message });
   }
