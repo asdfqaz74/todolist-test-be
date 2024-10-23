@@ -2,9 +2,10 @@
 const express = require("express");
 const router = express.Router();
 const todoController = require("../controller/todo.controller");
+const authController = require("../controller/auth.controller");
 
 // 라우터를 내보내기
-router.post("/", todoController.createTodo);
+router.post("/", authController.authenticate, todoController.createTodo);
 
 // router.get("/", (req, res) => {
 //   res.send("get all todos");

@@ -5,7 +5,8 @@ const todoController = {};
 todoController.createTodo = async (req, res) => {
   try {
     const { todo, isDone } = req.body;
-    const newTodo = new Todo({ todo, isDone });
+    const { userId } = req;
+    const newTodo = new Todo({ todo, isDone, author: userId });
     await newTodo.save();
     res.status(200).json({ status: "Success", data: newTodo });
   } catch (e) {
@@ -15,7 +16,7 @@ todoController.createTodo = async (req, res) => {
 
 todoController.getTodo = async (req, res) => {
   try {
-    const todoList = await Todo.find({}).select("-__v");
+    const todoList = await Todo.find({}).populate("author").select("-__v");
     res.status(200).json({ status: "Success", data: todoList });
   } catch (e) {
     res.status(400).json({ status: "Error", error: e.message });

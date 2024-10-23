@@ -27,12 +27,17 @@ const UserSchema = new Schema(
 UserSchema.methods.toJSON = function () {
   const user = this._doc;
   delete user.password;
+  delete user.__v;
+  delete user.createdAt;
+  delete user.updatedAt;
   return user;
 };
 
 // 토큰을 생성하는 메소드를 정의합니다.
 UserSchema.methods.generateToken = function () {
-  const token = jwt.sign({ _id: this.id }, JWT_SECRET_KEY);
+  const token = jwt.sign({ _id: this.id }, JWT_SECRET_KEY, {
+    expiresIn: "1d",
+  });
   return token;
 };
 
