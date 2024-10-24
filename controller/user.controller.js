@@ -50,7 +50,7 @@ userController.getUser = async (req, res) => {
     }
     res.status(200).json({ status: "success", user });
   } catch (e) {
-    res.status(400).json({ status: "asdf", message: e.message });
+    res.status(400).json({ status: "fail", message: e.message });
   }
 };
 
